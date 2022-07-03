@@ -2,14 +2,7 @@
  "AutoOpenMusicPlayer": false,
  "AutoDeleteTempFiles": true,
  "Theme": {
-  "LightMode": {
-   "BackgroundColor": "255,255,255",
-   "TextColor": "0,0,0"
-  },
-  "DarkMode": {
-   "BackgroundColor": "35,35,35",
-   "TextColor": "255,255,255"
-  }
- },
+  "LightMode": false,
+  "DarkMode": true,
  "DowloadsDirectory": "Downloads"
 }
