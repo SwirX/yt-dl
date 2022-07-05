@@ -4,6 +4,7 @@ import random
 import tkinter
 import tkinter.messagebox
 from tkinter import Label, Menu, ttk, Toplevel, Tk
+from tkinter import filedialog as fd
 from pytube import YouTube as yt
 from urllib.request import urlopen
 import urllib.request
@@ -14,13 +15,14 @@ import os
 from threading import Thread
 import pygame
 
-
-#Gettings the settings values
+# Gettings the settings values
 settingsfile = open("settings.json", "r")
 settings_object = json.load(settingsfile)
 file = open("mpV.json", "r")
 isOpen = json.load(file)
 isOpen['MusicPlayer'] = settings_object['AutoOpenMusicPlayer']
+#DownloadsDirectory
+dl_dir = settings_object['DownloadsDirectory']
 
 
 class DownloadVid(Thread):
@@ -29,6 +31,7 @@ class DownloadVid(Thread):
         with open("temp", "r") as temp:
             link = temp.read()
             self.link = link
+
     def run(self):
         video = yt(self.link)
         s = video.streams
@@ -36,17 +39,19 @@ class DownloadVid(Thread):
         d = v.download(output_path="Downloads")
         return d
 
+
 class DownloadAux(Thread):
     def __init__(self):
         Thread.__init__(self)
         with open("temp", "r") as temp:
             link = temp.read()
             self.link = link
+
     def run(self):
         video = yt(self.link)
         s = video.streams
         v = s.get_lowest_resolution()
-        d = v.download(output_path="Downloads")
+        d = v.download(output_path=dl_dir)
         mp4_file = str(d)
         mp3_file = str(d)[:-4] + ".mp3"
         videoclip = VideoFileClip(mp4_file)
@@ -57,6 +62,7 @@ class DownloadAux(Thread):
         os.remove(mp4_file)
         return d
 
+
 class DlFromList(Thread):
     def __init__(self):
         Thread.__init__(self)
@@ -65,6 +71,7 @@ class DlFromList(Thread):
         with open("DownloadList.txt", "r") as l:
             keywords = l.readlines()
             self.keywords = keywords
+
     def run(self):
         for line in self.keywords:
             self.lineCount += 1
@@ -76,7 +83,7 @@ class DlFromList(Thread):
             video = yt(link)
             streams = video.streams
             aux = streams.get_lowest_resolution()
-            d = aux.download(output_path="Downloads")
+            d = aux.download(output_path=dl_dir)
             self.linesPassed += 1
             mp4_file = str(d)
             mp3_file = str(d)[:-4] + ".mp3"
@@ -102,16 +109,21 @@ class MusicPlayer(ttk.Frame):
         self.infobar.pack(side=tkinter.BOTTOM)
         self.currently_playing = ttk.Label(self.infobar, text="")
         self.currently_playing.pack(side=tkinter.TOP)
-        self.pause_play = ttk.Button(self.infobar, text="||", style="TButton", padding=(10, 10), command=self.Play_Pause)
+        self.pause_play = ttk.Button(self.infobar, text="||", style="TButton", padding=(10, 10),
+                                     command=self.Play_Pause)
         self.pause_play.pack(side=tkinter.TOP)
-        self.skip = ttk.Button(self.infobar, text=">>", style="TButton", padding=(15, 10), command=lambda : self.Next_Previous(1))
+        self.skip = ttk.Button(self.infobar, text=">>", style="TButton", padding=(15, 10),
+                               command=lambda: self.Next_Previous(1))
         #self.skip.pack(side=tkinter.RIGHT)
-        self.previous = ttk.Button(self.infobar, text="<<", style='TButton', padding=(15, 10), command=lambda : self.Next_Previous(0))
+        self.previous = ttk.Button(self.infobar, text="<<", style='TButton', padding=(15, 10),
+                                   command=lambda: self.Next_Previous(0))
         #self.previous.pack(side=tkinter.LEFT)
         self.shuffle = ttk.Radiobutton(self.infobar, text='Shuffle', value=False, variable=self.shuffleValue)
-        #self.shuffle.pack(side=tkinter.RIGHT)
+        # self.shuffle.pack(side=tkinter.RIGHT)
+        self.currentFile = None
+
     def getaux(self):
-        audios_list = glob("Downloads/*.mp3")
+        audios_list = glob(f"{dl_dir}/*.mp3")
         temp_file = open("imported_files_temp", "a")
         for f in audios_list:
             with open('imported_files_temp') as t_file:
@@ -139,6 +151,7 @@ class MusicPlayer(ttk.Frame):
             pygame.mixer.music.play(loops=0)
             name = dir[10:]
             self.currently_playing.config(text=name)
+            self.currentFile = dir
 
     def Play_Pause(self):
         if pygame.mixer.music.get_busy():
@@ -154,19 +167,22 @@ class MusicPlayer(ttk.Frame):
     def Next_Previous(self, v):
         temp_imports = open("imported_files_temp", "r")
         lines = temp_imports.readlines()
+        #for line in lines:
+            #self.totalLines += 1
         for line in lines:
-            self.totalLines += 1
-        print(self.totalLines)
-        nextMusic = random.randint(0, self.totalLines)
+            if not any(self.currentFile in line):
+                newlines = []
+                newlines.insert(line)
+        nextMusic = random.choice(newlines)
         print(nextMusic)
         if v == 1:
             print("skip")
-            #music = lines[nextMusic]
-            #print(music)
-            #pygame.mixer.music.unload()
-            #pygame.mixer.music.load(f'C:\\Users\\Hamza\\OneDrive\\Bureau\\Yt-Dowloader[ALI]{music}')
-            #pygame.mixer.music.play(loops=0)
-        elif v==0:
+            # music = lines[nextMusic]
+            # print(music)
+            # pygame.mixer.music.unload()
+            # pygame.mixer.music.load(f'C:\\Users\\Hamza\\OneDrive\\Bureau\\Yt-Dowloader[ALI]{music}')
+            # pygame.mixer.music.play(loops=0)
+        elif v == 0:
             print("previous")
         temp_imports.close()
 
@@ -181,6 +197,7 @@ class MusicPlayer(ttk.Frame):
 class Root(Tk):
     def __init__(self):
         super().__init__()
+
         self.title("Yt-Dl")
         self.menubar = Menu(self)
         self.config(menu=self.menubar)
@@ -210,7 +227,7 @@ class Root(Tk):
         self.Views = ttk.Label(self.info, text="")
         self.Views.pack()
         self.Thumbnail = Label(self)
-        #self.Thumbnail.pack()
+        # self.Thumbnail.pack()
         self.dlvid = ttk.Button(self, text="Download video", style='TButton')
         self.dlvid.pack(side="left")
         self.dlaux = ttk.Button(self, text="download audio", style='TButton')
@@ -223,14 +240,51 @@ class Root(Tk):
         self.OpenList.pack()
         self.totalLinks = Label(self, text="")
         self.totalLinks.pack()
-        #Values
+        # Values
         self.settingsopen = False
         self.AutoOpenMPlayer = tkinter.BooleanVar(value=False)
         self.AutoDelTempFiles = tkinter.BooleanVar(value=False)
+        self.Theme = tkinter.IntVar(value=1)
 
     def openNotes(self):
-        osCommandString = "notepad.exe DownloadList.txt"
-        os.system(osCommandString)
+        def open_file():
+            filepath = "C:/Users/HP/Desktop/YoutubeDownloader/DownloadList.txt"
+            txt_edit.delete(1.0, tkinter.END)
+            with open(filepath, "r") as input_file:
+                text = input_file.read()
+                txt_edit.insert(tkinter.END, text)
+            window.title(f"Text Editor Application - {filepath}")
+
+        def getlines():
+            text = txt_edit.get(1.0, tkinter.END)
+            lines = text.count("\n")
+
+
+        def save_file():
+            filepath = "C:/Users/HP/Desktop/YoutubeDownloader/DownloadList.txt"
+            if not filepath:
+                return
+            with open(filepath, "w") as output_file:
+                text = txt_edit.get(1.0, tkinter.END)
+                output_file.write(text)
+            window.title(f"Text Editor Application - {filepath}")
+
+        window = tkinter.Tk()
+        window.title("Text Editor Application")
+        window.rowconfigure(0, minsize=800, weight=1)
+        window.columnconfigure(1, minsize=800, weight=1)
+
+        txt_edit = tkinter.Text(window)
+        open_file()
+        fr_buttons = ttk.Frame(window, relief=tkinter.RAISED)
+        btn_save = ttk.Button(fr_buttons, text="Save", command=save_file, style="TButton")
+        btn_save.grid(row=1, column=0, sticky="ew", padx=5)
+        lbl_lines = tkinter
+
+        fr_buttons.grid(row=0, column=0, sticky="ns")
+        txt_edit.grid(row=0, column=1, sticky="nsew")
+
+        window.mainloop()
 
     def onclick(self, instance):
         txt = self.textBox.get()
@@ -245,11 +299,11 @@ class Root(Tk):
         u = urlopen(imgURL)
         raw_data = u.read()
         u.close()
-        #photo = ImageTk.PhotoImage(data=raw_data)
+        # photo = ImageTk.PhotoImage(data=raw_data)
         self.vidTitle.configure(text=video.title)
         self.vidAuthor.configure(text=video.author)
-        #self.Thumbnail.configure(image=photo)
-        #self.Thumbnail.image = photo
+        # self.Thumbnail.configure(image=photo)
+        # self.Thumbnail.image = photo
         self.dlvid.configure(command=self.DownloadVid)
         self.dlaux.configure(command=self.DownloadAux)
         self.dlaux.pack(side="right")
@@ -286,14 +340,14 @@ class Root(Tk):
 
     def onDelete(self):
         answer = tkinter.messagebox.askyesno(title='Close',
-                          message='Are you sure that you want to quit?')
+                                             message='Are you sure that you want to quit?')
         if answer:
             with open("imported_files_temp", "w") as f:
                 f.write("")
             with open("temp", "w") as temp:
                 temp.write("")
             with open("choosen_file", "w") as c_file:
-               c_file.write("")
+                c_file.write("")
             with open("settings.json", "w") as jsonFile:
                 json.dump(settings_object, jsonFile, indent=1)
                 jsonFile.close()
@@ -304,44 +358,82 @@ class Root(Tk):
     def OpenSettings(self):
         if self.settingsopen == False:
             def ToggleMplayer(v):
-                v = not v
+                v=not v
                 settings_object['AutoOpenMusicPlayer'] = v
                 self.AutoOpenMPlayer.set(v)
                 print(f"AutoOpenMusicPlayer = {settings_object['AutoOpenMusicPlayer']}")
 
             def ToggleDelTempF(v):
-                v = not v
+                v= not v
                 settings_object['AutoDeleteTempFiles'] = v
                 self.AutoDelTempFiles.set(v)
                 print(f"AutoDeleteTempFiles = {settings_object['AutoDeleteTempFiles']}")
 
+            def ToggleTheme(v):
+                if v == 1:
+                    self.ChangeTheme.setvar(value=2)
+                    settings_object['Theme'] = 2
+                    try:
+                        root.tk.call("set_theme", "light")
+                        mplr.tk.call("set_theme", "light")
+                        v=2
+                    except:
+                        print("couldn't change the theme")
+                elif v == 2:
+                    self.ChangeTheme.setvar(value=1)
+                    settings_object['Theme'] = 1
+                    try:
+                        root.tk.call("set_theme", "dark")
+                        mplr.tk.call("set_theme", "dark")
+                        v=1
+                    except:
+                        print("couldn't change the theme")
+
+            def ChangeDir():
+                Dir = fd.askdirectory()
+                settings_object['DownloadsDirectory'] = Dir
+
             self.SttgsFrame = Toplevel(self)
             self.SttgsFrame.title = "Settings"
-            #AutoOpenMusicPlayer
+            # AutoOpenMusicPlayer
             self.AutoOpenMsP = ttk.Checkbutton(self.SttgsFrame,
                                                text="Auto open the music player",
-                                               variable=self.AutoOpenMPlayer,
+                                               variable=settings_object['AutoOpenMusicPlayer'],
                                                command=lambda: ToggleMplayer(settings_object['AutoOpenMusicPlayer']),
                                                style='Switch.TCheckbutton',
                                                onvalue=True,
                                                offvalue=False)
 
             self.AutoOpenMsP.pack()
-            #AutoDeleteTempFiles
+            # AutoDeleteTempFiles
             self.AutoDeleteTempF = ttk.Checkbutton(self.SttgsFrame,
                                                    text="Auto delete the temp files after closing the app",
-                                                   variable=self.AutoDelTempFiles,
-                                                   command=lambda: ToggleDelTempF(settings_object['AutoDeleteTempFiles']),
+                                                   variable=settings_object['AutoDeleteTempFiles'],
+                                                   command=lambda: ToggleDelTempF(
+                                                       settings_object['AutoDeleteTempFiles']),
                                                    style='Switch.TCheckbutton',
                                                    onvalue=True,
                                                    offvalue=False)
             self.AutoDeleteTempF.pack()
+            #ChangeTheme
+            self.ChangeTheme = ttk.Button(self.SttgsFrame,
+                                          text="toggle theme",
+                                          command=lambda: ToggleTheme(settings_object['Theme']),
+                                          style='TButton')
+            self.ChangeTheme.pack()
+
+            #ChangeTheDownloadDirectory
+            self.btn_changeDir = ttk.Button(self.SttgsFrame,
+                                            text="Change the download directory",
+                                            command=ChangeDir)
+            self.btn_changeDir.pack()
 
             self.settingsopen = True
         else:
             tkinter.messagebox.showerror(title="Error", message="Settings already open")
 
         def SttgsOnClosing():
+            SyncValues()
             self.settingsopen = False
             self.SttgsFrame.destroy()
 
@@ -353,51 +445,54 @@ class Root(Tk):
         elif not isOpen['MusicPlayer']:
             MPlayer = MusicPlayer()
             MPlayer.grid(row=0, column=0)
-            #isOpen['MusicPlayer'] = True
+            # isOpen['MusicPlayer'] = True
+
+
 def SyncValues():
-    root = Root()
-    if settings_object['AutoOpenMusicPlayer']:
-        root.AutoOpenMPlayer.set(value=True)
-    elif settings_object['AutoOpenMusicPlayer']==False:
-        root.AutoOpenMPlayer.set(value=False)
+    with open("settings.json", "w") as jsonFile:
+        json.dump(settings_object, jsonFile, indent=1)
+        jsonFile.close()
 
-    if settings_object['AutoDeleteTempFiles']:
-        root.AutoDelTempFiles.set(value=True)
-    elif settings_object['AutoDeleteTempFiles']==False:
-        root.AutoDelTempFiles.set(value=False)
 
-#music player settings
+# music player settings
 mplr = MusicPlayer()
 if settings_object['AutoOpenMusicPlayer']:
     mplr.grid(row=0, column=0)
-elif not settings_object['AutoOpenMusicPlayer']:
+elif settings_object['AutoOpenMusicPlayer'] == False:
     mplr.destroy()
 
-mplr.tk.call("source", "azure.tcl")
-mplr.tk.call("set_theme", "dark")
-#main window settings
+# main window settings
 if __name__ == "__main__":
     root = Root()
+    x_cordinate = int((root.winfo_screenwidth() / 2) - (root.winfo_width() / 2))
+    y_cordinate = int((root.winfo_screenheight() / 2) - (root.winfo_height() / 2))
+    root.geometry("+{}+{}".format(x_cordinate, y_cordinate - 20))
     if settings_object['AutoOpenMusicPlayer']:
         root.AutoOpenMPlayer.set(True)
-    elif settings_object['AutoOpenMusicPlayer']==False:
+    elif settings_object['AutoOpenMusicPlayer'] == False:
         root.AutoOpenMPlayer.set(False)
 
     if settings_object['AutoDeleteTempFiles']:
         root.AutoDelTempFiles.set(True)
-    elif settings_object['AutoDeleteTempFiles']==False:
+    elif settings_object['AutoDeleteTempFiles'] == False:
         root.AutoDelTempFiles.set(False)
-    root.protocol("WM_DELETE_WINDOW",root.onDelete)
+    root.protocol("WM_DELETE_WINDOW", root.onDelete)
 
     # Simply set the theme
     root.tk.call("source", "azure.tcl")
-    root.tk.call("set_theme", "dark")
+    mplr.tk.call("source", "azure.tcl")
+    if settings_object['Theme'] == 1:
+        root.tk.call("set_theme", "dark")
+        mplr.tk.call("set_theme", "dark")
+    elif settings_object['Theme'] == 2:
+        root.tk.call("set_theme", "light")
+        mplr.tk.call("set_theme", "light")
 
     # Set a minsize for the window, and place it in the middle
     root.update()
     root.minsize(root.winfo_width(), root.winfo_height())
     x_cordinate = int((root.winfo_screenwidth() / 2) - (root.winfo_width() / 2))
     y_cordinate = int((root.winfo_screenheight() / 2) - (root.winfo_height() / 2))
-    root.geometry("+{}+{}".format(x_cordinate, y_cordinate-20))
+    root.geometry("+{}+{}".format(x_cordinate, y_cordinate - 20))
 
     root.mainloop()
