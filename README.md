@@ -2,7 +2,7 @@
 
 <p align="center">
 <a href="https://bit.ly/30yDbd5"><img title="Made in Morocco" src="https://img.shields.io/badge/Tool-Yt--Dl-green?style=plastic"></a>
-<a href="https://bit.ly/30yDbd5"><img title="Version" src="https://img.shields.io/badge/Version-1.0.2-green?style=plastic"></a>
+<a href="https://bit.ly/30yDbd5"><img title="Version" src="https://img.shields.io/badge/Version-1.0.3-green?style=plastic"></a>
 <a href="https://bit.ly/30yDbd5"><img title="Maintainence" src="https://img.shields.io/badge/-Maintained-green?style=plastic"></a>
 </p>
 
@@ -17,6 +17,9 @@ Youtube Downloader (Yt-Dl for short) is a simple python program with which you c
 * App settings
 * Simple to use
 * Modern UI
+* Toggle Theme (light/dark mode)
+* Change The Download Output(Directory)
+
 
 ### Available On
 
