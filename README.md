@@ -46,13 +46,10 @@ Youtube Downloader (Yt-Dl for short) is a simple python program with which you c
 copy this command `git clone https://github.com/SwirX/yt-dl` in the command prompt
 ### Install the required libraries
 enter this command after downloading the folder `pip install -r requirements.txt`
-### Create A New Folder And Name it "theme" (make sure it all lowercase)
+### Run The Bat File
+click on the `move.bat` file and after you should see a theme folder
 
-### Move The Dark And Light Folders Into The "theme" Folder That We Just Created
-
-### Move the `dark.tcl` And `light.tcl` Into That Same Folder (the "theme" folder)
-
-# And There You Have it! Congrats!
+### And There You Have it! Congrats!
 
 ## To Make The Startup More Clean
 ### We Need To Create A .bat File
