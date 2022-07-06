@@ -1,37 +1,77 @@
-## Welcome to GitHub Pages
+# yt-downloader
 
-You can use the [editor on GitHub](https://github.com/SwirX/yt-dl/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+<p align="center">
+<a href="https://bit.ly/30yDbd5"><img title="Made in Morocco" src="https://img.shields.io/badge/Tool-Yt--Dl-green?style=plastic"></a>
+<a href="https://bit.ly/30yDbd5"><img title="Version" src="https://img.shields.io/badge/Version-1.0.3-green?style=plastic"></a>
+<a href="https://bit.ly/30yDbd5"><img title="Maintainence" src="https://img.shields.io/badge/-Maintained-green?style=plastic"></a>
+</p>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Simple youtube video downloader
 
-### Markdown
+### About - Yt-Dl v1.0.3(07-05-22)
+Youtube Downloader (Yt-Dl for short) is a simple python program with which you can download videos in mp3 or mp4
+### Features:
+* Video Info
+* Download from list
+* Music player
+* App settings
+* Simple to use
+* Modern UI
+* Toggle Theme (light/dark mode)
+* Change The Download Output(Directory)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+### Available On
 
-# Header 1
-## Header 2
-### Header 3
+* Windows
+* Linux
+* Mac-OS
 
-- Bulleted
-- List
+### Tested On
 
-1. Numbered
-2. List
+* Windows
 
-**Bold** and _Italic_ and `Code` text
+# Getting Started
 
-[Link](url) and ![Image](src)
-```
+### Requirement
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+* Python3
+* Access to internet
 
-### Jekyll Themes
+## Instalation [Windows]
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/SwirX/yt-dl/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Go to your terminal
+(click on  the windows button then search for cmd)
+### get the repository
+copy this command `git clone https://github.com/SwirX/yt-dl` in the command prompt
+### Install the required libraries
+enter this command after downloading the folder `pip install -r requirements.txt`
+### Run The Bat File
+click on the `move.bat` file and after you should see a theme folder
 
-### Support or Contact
+### And There You Have it! Congrats!
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+## To Make The Startup More Clean
+### We Need To Create A .bat File
+#### 1. Create A Text File On Your Desktop
+* right click on a free place on your desktop
+* click on new
+* then on text document
+* and name it what you want
+#### 2. Type The Command
+* copy the directory of your folder (Ex: if you put in in your desktop enter it and copy the directory)
+* open the text file that you have just created
+* type in
+`cd TheDirectoryThatYouHaveCopied
+python main.py`
+#### 3. Converting It Into A Bat File
+* click on file then save as (or use the combination "Ctrl+Maj+S")
+* name it whatever you want just make sure that it ends with ".bat" (Ex: Yt-Dl.bat)
+* save it
+#### 4. And There You Have A "Shortcut" For Yt-Dl
+
+### If you have any problem/bugs/suggestion feel free to message me
+<p align="center">
+<a href="https://discord.gg/C3ys2Kv"><img title="Discord" src="https://img.shields.io/badge/Discord-blueviolet?style=plastic&logo=discord"></a>
+<a href="https://instagram.com/swirx.yt"><img title="Instagram" src="https://img.shields.io/badge/Instagram-ff69b4?style=plastic&logo=instagram"></a>
+</p>
