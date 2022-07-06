@@ -8,7 +8,7 @@
 
 Simple youtube video downloader
 
-### About - Yt-Dl v1.0.2(2022-06-20)
+### About - Yt-Dl v1.0.3(07-05-22)
 Youtube Downloader (Yt-Dl for short) is a simple python program with which you can download videos in mp3 or mp4
 ### Features:
 * Video Info
