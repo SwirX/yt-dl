@@ -1,4 +1,4 @@
-# yt-downloader
+# yt-dl
 
 <p align="center">
 <a href="https://bit.ly/30yDbd5"><img title="Made in Morocco" src="https://img.shields.io/badge/Tool-Yt--Dl-green?style=plastic"></a>
