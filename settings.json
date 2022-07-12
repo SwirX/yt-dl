@@ -1,8 +1,6 @@
 {
- "AutoOpenMusicPlayer": false,
+ "AutoOpenMusicPlayer": true,
  "AutoDeleteTempFiles": true,
- "Theme": {
-  "LightMode": false,
-  "DarkMode": true,
- "DowloadsDirectory": "Downloads"
+ "Theme": 1,
+ "DownloadsDirectory": "C:/Users/HP/Desktop/YoutubeDownloader/Downloads"
 }
