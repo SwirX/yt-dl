@@ -14,6 +14,9 @@ from moviepy.editor import VideoFileClip
 import os
 from threading import Thread
 import pygame
+import requests
+import eyed3
+from eyed3.core import Date
 
 # Gettings the settings values
 settingsfile = open("settings.json", "r")
@@ -22,7 +25,11 @@ file = open("mpV.json", "r")
 isOpen = json.load(file)
 isOpen['MusicPlayer'] = settings_object['AutoOpenMusicPlayer']
 #DownloadsDirectory
-dl_dir = settings_object['DownloadsDirectory']
+dl_dir_ = settings_object['DownloadsDirectory']
+dl_dir = dl_dir_.replace("/","\\")
+#research
+research = open("researchHistory", 'r')
+
 
 
 class DownloadVid(Thread):
@@ -36,7 +43,7 @@ class DownloadVid(Thread):
         video = yt(self.link)
         s = video.streams
         v = s.get_lowest_resolution()
-        d = v.download(output_path="Downloads")
+        d = v.download(output_path=dl_dir)
         return d
 
 
@@ -47,7 +54,73 @@ class DownloadAux(Thread):
             link = temp.read()
             self.link = link
 
+
+
     def run(self):
+        def getInfo(fname):
+            print(fname)
+            dldirlw = dl_dir.lower()
+            bannedwords = [dldirlw, "\\", ".mp3", "(", ")", "[", '"', "]" "audio", "official audio", "officialaudio", "official video", "(offcialaudio)",
+                           'feat', "ft.", "&", "ft", "visualizer", "lyrics", "lyrics video", "lyricsvideo", "official music video"
+                           , "officialmusicvideo", "official lyric video", "officiallyricvideo", 'visualizer']
+            filename = fname
+            filename = filename.lower()
+            for word in bannedwords:
+                filename = filename.replace(word, "")
+            print(filename)
+            # Getting the song name
+            url = "https://shazam.p.rapidapi.com/search"
+            querystring = {"term": filename, "locale": "en-US", "offset": "0", "limit": "1"}
+            headers = {
+                "X-RapidAPI-Key": "c977989d98msh4b7faeefeaa84a8p18972ajsnaeb4f3b572d3",
+                "X-RapidAPI-Host": "shazam.p.rapidapi.com"
+            }
+            rsp = requests.request("GET", url, headers=headers, params=querystring)
+            print(rsp.text)
+            storage = rsp.json()
+            title = storage['tracks']['hits'][0]['track']['title']
+            # Getting the info
+            url = "https://spotify23.p.rapidapi.com/search/"
+            querystring = {"q": title, "type": "tracks", "offset": "0", "limit": "1", "numberOfTopResults": "1"}
+            headers = {
+                "X-RapidAPI-Key": "c977989d98msh4b7faeefeaa84a8p18972ajsnaeb4f3b572d3",
+                "X-RapidAPI-Host": "spotify23.p.rapidapi.com"
+            }
+            response = requests.request("GET", url, headers=headers, params=querystring)
+            storage = response.json()
+            data = storage['tracks']['items'][0]['data']
+            trackname = data['name']
+            artistname = data['artists']['items'][0]['profile']['name']
+            trackid = data['id']
+
+            url = "https://spotify23.p.rapidapi.com/tracks/"
+            querystring = {"ids": trackid}
+            headers = {
+                "X-RapidAPI-Key": "c977989d98msh4b7faeefeaa84a8p18972ajsnaeb4f3b572d3",
+                "X-RapidAPI-Host": "spotify23.p.rapidapi.com"
+            }
+            response = requests.request("GET", url, headers=headers, params=querystring)
+            storage = response.json()
+            infolist = storage['tracks'][0]
+            albuminfo = infolist['album']
+            albumname = albuminfo['name']
+            albumreleasedate = albuminfo['release_date']
+            tracknum = infolist['track_number']
+            listyear = albumreleasedate.split("-")
+            year = listyear[0]
+            year = int(year)
+            auxfile = eyed3.load(fname)
+            auxfile.tag.artist = artistname
+            auxfile.tag.album = albumname
+            auxfile.tag.title = trackname
+            auxfile.tag.track = tracknum
+            auxfile.tag.disk = 1
+            auxfile.tag.year = Date(year)
+            auxfile.tag.save()
+            oldname = fname
+            newname = f"{dl_dir}\\{title}.mp3"
+            os.rename(oldname, newname)
+
         video = yt(self.link)
         s = video.streams
         v = s.get_lowest_resolution()
@@ -60,6 +133,7 @@ class DownloadAux(Thread):
         audioclip.close()
         videoclip.close()
         os.remove(mp4_file)
+        getInfo(mp3_file)
         return d
 
 
@@ -73,11 +147,74 @@ class DlFromList(Thread):
             self.keywords = keywords
 
     def run(self):
+        def getInfo(fname):
+            print(fname)
+            dldirlw = dl_dir.lower()
+            bannedwords = [dldirlw, "\\", ".mp3", "(", ")", "[", '"', "]" "audio", "official audio", "officialaudio", "official video", "(offcialaudio)",
+                           'feat', "ft.", "&", "ft", "visualizer", "lyrics", "lyrics video", "lyricsvideo", "official music video"
+                           , "officialmusicvideo", "official lyric video", "officiallyricvideo", 'visualizer']
+            filename = fname
+            filename = filename.lower()
+            for word in bannedwords:
+                filename = filename.replace(word, "")
+            print(filename)
+            # Getting the song name
+            url = "https://shazam.p.rapidapi.com/search"
+            querystring = {"term": filename, "locale": "en-US", "offset": "0", "limit": "1"}
+            headers = {
+                "X-RapidAPI-Key": "c977989d98msh4b7faeefeaa84a8p18972ajsnaeb4f3b572d3",
+                "X-RapidAPI-Host": "shazam.p.rapidapi.com"
+            }
+            rsp = requests.request("GET", url, headers=headers, params=querystring)
+            print(rsp.text)
+            storage = rsp.json()
+            title = storage['tracks']['hits'][0]['track']['title']
+            # Getting the info
+            url = "https://spotify23.p.rapidapi.com/search/"
+            querystring = {"q": title, "type": "tracks", "offset": "0", "limit": "1", "numberOfTopResults": "1"}
+            headers = {
+                "X-RapidAPI-Key": "c977989d98msh4b7faeefeaa84a8p18972ajsnaeb4f3b572d3",
+                "X-RapidAPI-Host": "spotify23.p.rapidapi.com"
+            }
+            response = requests.request("GET", url, headers=headers, params=querystring)
+            storage = response.json()
+            data = storage['tracks']['items'][0]['data']
+            trackname = data['name']
+            artistname = data['artists']['items'][0]['profile']['name']
+            trackid = data['id']
+
+            url = "https://spotify23.p.rapidapi.com/tracks/"
+            querystring = {"ids": trackid}
+            headers = {
+                "X-RapidAPI-Key": "c977989d98msh4b7faeefeaa84a8p18972ajsnaeb4f3b572d3",
+                "X-RapidAPI-Host": "spotify23.p.rapidapi.com"
+            }
+            response = requests.request("GET", url, headers=headers, params=querystring)
+            storage = response.json()
+            infolist = storage['tracks'][0]
+            albuminfo = infolist['album']
+            albumname = albuminfo['name']
+            albumreleasedate = albuminfo['release_date']
+            tracknum = infolist['track_number']
+            year = (str(albumreleasedate))[:-6]
+            auxfile = eyed3.load(fname)
+            auxfile.tag.artist = artistname
+            auxfile.tag.album = albumname
+            auxfile.tag.title = trackname
+            auxfile.tag.track = tracknum
+            auxfile.tag.disc = 1
+            auxfile.tag.year = year
+            auxfile.tag.save()
+            oldname = fname
+            newname = f"{dl_dir}\\{artistname}-{trackname}"
+            os.rename(oldname, newname)
+
         for line in self.keywords:
             self.lineCount += 1
         for keyword in self.keywords:
             formated_txt = keyword.replace(" ", "+")
-            html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + formated_txt)
+            html = urllib.request.urlopen("https://www.youtube.com/results?search_query=official+audio+" + formated_txt)
+            print(html)
             video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
             link = "https://www.youtube.com/watch?v=" + video_ids[0]
             video = yt(link)
@@ -93,6 +230,7 @@ class DlFromList(Thread):
             audioclip.close()
             videoclip.close()
             os.remove(mp4_file)
+            getInfo(mp3_file)
 
 
 class MusicPlayer(ttk.Frame):
@@ -114,10 +252,10 @@ class MusicPlayer(ttk.Frame):
         self.pause_play.pack(side=tkinter.TOP)
         self.skip = ttk.Button(self.infobar, text=">>", style="TButton", padding=(15, 10),
                                command=lambda: self.Next_Previous(1))
-        #self.skip.pack(side=tkinter.RIGHT)
+        self.skip.pack(side=tkinter.RIGHT)
         self.previous = ttk.Button(self.infobar, text="<<", style='TButton', padding=(15, 10),
                                    command=lambda: self.Next_Previous(0))
-        #self.previous.pack(side=tkinter.LEFT)
+        self.previous.pack(side=tkinter.LEFT)
         self.shuffle = ttk.Radiobutton(self.infobar, text='Shuffle', value=False, variable=self.shuffleValue)
         # self.shuffle.pack(side=tkinter.RIGHT)
         self.currentFile = None
@@ -132,7 +270,9 @@ class MusicPlayer(ttk.Frame):
                         return
                     return
             temp_file.write(f + "\n")
-            f_name = f[10:]
+            f_name = f.split(dl_dir)
+            f_name = f_name[1]
+            f_name = f_name.replace("\\", "")
             b = ttk.Button(self.lframe, text=f_name, style='TButton')
             b.pack()
             b.configure(command=lambda f=f: self.play(f))
