@@ -52,18 +52,20 @@ Made a button that opens the music player
 Fixed a bug of duplicate windows when opening the music player while it already open
 Made DarkMode the default theme
 -------------------------------------------------
-Release[RTW] 1.0.2(06-20-22)
+Release 1.0.2(06-20-22)
 Added Video info when searching
 Reworked on the music player
 Simplified the usage
 -------------------------------------------------
-Release[RTW] 1.0.3(07-05-22)
+Release 1.0.3(07-05-22)
 Rewrote the scripts for optimisation
 Added Toggle Theme
 Made the download directory changeable
 Created a custom text editor for the download list
 Made the ui more appealing
 Fixed some bugs
-
-
-
+-------------------------------------------------
+Release 1.1.3(07-12-22)
+The file name changes to the title of the song
+Added the metadata for the mp3 files to their corresponding values
+Fixed some bugs
