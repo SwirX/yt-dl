@@ -28,7 +28,7 @@ isOpen['MusicPlayer'] = settings_object['AutoOpenMusicPlayer']
 dl_dir_ = settings_object['DownloadsDirectory']
 dl_dir = dl_dir_.replace("/","\\")
 #research
-research = open("researchHistory", 'r')
+#research = open("researchHistory", 'r')
 
 
 
