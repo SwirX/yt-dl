@@ -47,28 +47,17 @@ copy this command `git clone https://github.com/SwirX/yt-dl` in the command prom
 ### Install the required libraries
 enter this command after downloading the folder `pip install -r requirements.txt`
 ### Run The Bat File
-click on the `move.bat` file and after you should see a theme folder
+click on the `setup.bat` file and after you should see a theme folder and a new bat file
 
 ### And There You Have it! Congrats!
 
 ## To Make The Startup More Clean
 ### We Need To Create A .bat File
-#### 1. Create A Text File On Your Desktop
-* right click on a free place on your desktop
-* click on new
-* then on text document
-* and name it what you want
-#### 2. Type The Command
-* copy the directory of your folder (Ex: if you put in in your desktop enter it and copy the directory)
-* open the text file that you have just created
-* type in
-`cd TheDirectoryThatYouHaveCopied
-python main.py`
-#### 3. Converting It Into A Bat File
-* click on file then save as (or use the combination "Ctrl+Maj+S")
-* name it whatever you want just make sure that it ends with ".bat" (Ex: Yt-Dl.bat)
-* save it
+#### 1. Move the bat file to your desktop
+* After running `setup.bat` you will find a new bat file named `yt-dl.bat`
+* You can then move it where ever you want (ex: Put it on your desktop)
 #### 4. And There You Have A "Shortcut" For Yt-Dl
+
 
 ### If you have any problem/bugs/suggestion feel free to message me
 <p align="center">
