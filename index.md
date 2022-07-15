@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://youtube.com/swirx"><img title="Made in Morocco" src="https://img.shields.io/badge/Tool-Yt--Dl-green?style=plastic"></a>
-<a href="https://youtube.com/swirx"><img title="Version" src="https://img.shields.io/badge/Version-1.0.3-green?style=plastic"></a>
+<a href="https://youtube.com/swirx"><img title="Version" src="https://img.shields.io/badge/Version-1.1.3-green?style=plastic"></a>
 <a href="https://youtube.com/swirx"><img title="Maintainence" src="https://img.shields.io/badge/-Maintained-green?style=plastic"></a>
 </p>
 
@@ -8,7 +8,7 @@
 
 Simple youtube video downloader
 
-### About - Yt-Dl v1.0.3(07-05-22)
+### About - Yt-Dl v1.1.3(07-12-22)
 Youtube Downloader (Yt-Dl for short) is a simple python program with which you can download videos in mp3 or mp4
 ### Features:
 * Video Info
