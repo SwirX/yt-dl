@@ -23,6 +23,8 @@ goto :download
 
 :download
 pip install -r requirements.txt
+cd %cd%
+mkdir Downloads
 
 echo cd %cd% > yt-dl.bat
 echo python main.py >> yt-dl.bat
