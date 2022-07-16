@@ -1,3 +1,4 @@
+@ECHO OFF
 echo Checking if python is installed...
 goto :DOES_PYTHON_EXIST
 
@@ -7,7 +8,6 @@ python -V | find "Python"    >NUL 2>NUL && (goto :PYTHON_DOES_EXIST)
 goto :OEF
 
 :PYTHON_DOES_NOT_EXIST
-@ECHO ON
 echo It seems like you dont have python installed on your machine.
 echo I'm affraid that the program won't run until python is installed.
 echo the installation of python will begin now
@@ -18,8 +18,6 @@ goto :download
 for /f "delims=" %%V in ('python -V') do @set ver=%%V
 echo Congrats, %ver% is installed...
 goto :download
-
-@echo off
 
 :download
 pip install -r requirements.txt
