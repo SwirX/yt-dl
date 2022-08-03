@@ -1,0 +1,128 @@
+@font-face {
+    font-family: 'x360';
+    src: url('x360-webfont.woff2') format('woff2'),
+         url('x360-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    
+    font-family: 'x360';font-size: 22px;
+
+    color:whitesmoke;
+
+    background-color: #232323;
+
+    /*background: hsla(159, 100%, 50%, 1);
+
+    background: linear-gradient(315deg, hsla(159, 100%, 50%, 1) 9%, hsla(216, 100%, 62%, 1) 100%);
+
+    background: -moz-linear-gradient(315deg, hsla(159, 100%, 50%, 1) 9%, hsla(216, 100%, 62%, 1) 100%);
+
+    background: -webkit-linear-gradient(315deg, hsla(159, 100%, 50%, 1) 9%, hsla(216, 100%, 62%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#00FFA6", endColorstr="#3D8BFF", GradientType=1 );*/
+}
+
+.homepgbtn {
+    border-radius: 8px;
+    background-color:white;
+    border: 10px black;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+}
+.downloadpgbtn{
+    border-radius: 8px;
+    background-color:white;
+    border: 2px black;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+}
+.docspgbtn{
+    border-radius: 8px;
+    background-color:white;
+    border: 2px black;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+}
+.searchpgbtn{
+    border-radius: 8px;
+    background-color:white;
+    border: 2px black;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+}
+
+.link {
+    color:rgb(62, 97, 167);
+}
+
+::selection {
+    color: white;
+    background: rgb(119, 107, 228);
+}
+
+.round {
+    border-radius: 10px;
+    border: black;
+    color:black;
+    background-color: white;
+}
+
+/* Remove default bullets */
+ul, #myUL {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}

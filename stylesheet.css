@@ -1,0 +1,204 @@
+@font-face {
+    font-family: 'x360';
+    src: url('x360-webfont.woff2') format('woff2'),
+         url('x360-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    
+    font-family: 'x360';font-size: 22px;
+
+    color:whitesmoke;
+
+    background-color: #232323;
+
+    /*background: hsla(159, 100%, 50%, 1);
+
+    background: linear-gradient(315deg, hsla(159, 100%, 50%, 1) 9%, hsla(216, 100%, 62%, 1) 100%);
+
+    background: -moz-linear-gradient(315deg, hsla(159, 100%, 50%, 1) 9%, hsla(216, 100%, 62%, 1) 100%);
+
+    background: -webkit-linear-gradient(315deg, hsla(159, 100%, 50%, 1) 9%, hsla(216, 100%, 62%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#00FFA6", endColorstr="#3D8BFF", GradientType=1 );*/
+}
+
+.homepgbtn {
+    border-radius: 8px;
+    background-color:white;
+    border: 10px black;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+}
+.downloadpgbtn{
+    border-radius: 8px;
+    background-color:white;
+    border: 2px black;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+}
+.docspgbtn{
+    border-radius: 8px;
+    background-color:white;
+    border: 2px black;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+}
+.searchpgbtn{
+    border-radius: 8px;
+    background-color:white;
+    border: 2px black;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+}
+
+.link {
+    color:rgb(62, 97, 167);
+}
+
+code {
+    border-radius:8px;
+    background-color: #666666;
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    font-size:18px;
+    margin: 2px 1px;
+    padding: 2.5px;
+    background-color:#666666;
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+}
+
+.code {
+    border-radius:8px;
+    background-color: #666666;
+    border: none;
+    color: white;
+    padding: 0px;
+    text-align:center;
+    text-decoration: none;
+    display: inline-block;
+    font-size:18px;
+    margin: 2px 1px;
+    background-color:#666666;
+    transition: transform .2s; /* Animation */
+    margin: 0 auto;
+}
+  
+code:hover {
+    transform: scale(1.5); 
+    box-shadow: 4px 4px 10px black;
+}
+
+/* Tooltip text */
+code .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  
+  /* Tooltip arrow */
+  code .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  code:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+::selection {
+    color: white;
+    background: rgb(119, 107, 228);
+}
+
+.round {
+    border-radius: 10px;
+    border: black;
+    color:black;
+    background-color: white;
+}
+
+/* Style the list */
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: #363636;
+    border-radius: 8px;
+  }
+  
+  /* Display list items side by side */
+  ul.breadcrumb li {
+    display: inline;
+    font-size: 18px;
+  }
+  
+  /* Add a slash symbol (/) before/behind each list item */
+  ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: black;
+    content: "/\00a0";
+    font-size: 22px;
+  }
+  
+  /* Add a color to all links inside the list */
+  ul.breadcrumb li button {
+    color: #0275d8;
+    text-decoration: none;
+    background: none;
+    background-color: transparent;
+    border: transparent;
+    font-size: 22px;
+  }
+  
+  /* Add a color on mouse-over */
+  ul.breadcrumb li button:hover {
+    color: #01447e;
+    text-decoration: underline;
+  }

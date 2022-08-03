@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home | yt-dlr</title>  
+        <link href='stylesheet.css' rel='stylesheet'>
+    </head>
+    <header>
+        <h1 align="center">yt-dl</h1>
+        <script type='module' src="yt-dl.js"></script>
+        <nav align="center">
+            <a href="home.html" class="homepgbtn">Home</a>
+            <a href="download.html" class="downloadpgbtn">Download</a>
+            <!--<a href="docs.html" class="nav docspgbtn">Github Documentation</a>-->
+            <a href="search.html" class="searchpgbtn">Search</a>
+        </nav>
+        <hr>
+    </header>
+    <body>
+        <div align="center">
+            <input class="round"id="search" value='Search' type="text"/>
+            <button class="round" onclick="search()">Search</button>
+            <pre id="response"></pre>
+        </div>
+    </body>
+</html>
